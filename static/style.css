@@ -1,0 +1,39 @@
+:root{
+  --overlay-bg: rgba(0,0,0,0.35);
+  --text-color: #fff;
+}
+html,body{height:100%;margin:0}
+body{font-family: Arial, Helvetica, sans-serif;}
+.bg{
+  position:fixed;inset:0;
+  /* primary image — user-provided background (paths are relative to this CSS file) */
+  background-image: url('background.jpeg');
+  /* fallbacks */
+  background-image: image-set(url('background.jpeg') 1x, url('bg.jpg') 1x, url('bg.svg') 1x);
+  background-size:cover;
+  background-position:center center;
+  filter: contrast(0.95) saturate(0.9);
+  z-index: -1;
+}
+
+/* fallback SVG if bg.jpg isn't present */
+@supports (background-image: url('static/bg.svg')){}
+
+.overlay{
+  height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;color:var(--text-color);
+  background: linear-gradient(180deg, rgba(0,0,0,0.0) 0%, var(--overlay-bg) 80%);
+}
+
+h1{font-family: 'Creepster', cursive;margin:0;text-shadow:0 6px 24px rgba(0,0,0,0.6);}
+.title-small{font-size:clamp(1.6rem, 4.5vw, 3.6rem)}
+
+/* Ensure image fills on mobile and avoids address bar issues */
+@media (max-height:400px){h1{font-size:2.4rem}}
+
+/* Tap-to-enable overlay when autoplay is blocked */
+.tap-overlay{
+  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:30;color:#fff;background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.7));font-size:1.2rem;backdrop-filter: blur(4px);
+  cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s ease;
+}
+.tap-overlay.visible{opacity:1;pointer-events:auto}
+
